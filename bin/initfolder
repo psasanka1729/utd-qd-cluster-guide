@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+if [ $# -lt 2 ]; then
+    echo "Proper usage: initfolder \$oldname \$newname"
+    exit 0
+fi
+
+if [ -d "$SCR/$2/" ]; then
+    echo 
+    while true; do
+	read -p "Folder $SCR/$2/ already exists. Still initialize? (Y/N)" yn
+	case $yn in
+            [Yy]* ) break;;
+            [Nn]* ) echo "Thank you for your feedback. Canceling initialization"; exit;;
+            * ) echo "Please answer yes or no.";;
+	esac
+    done
+fi
+
+mkdir tempdir
+mv *_builder.py tempdir
+mv *.template tempdir
+rm * -f &>/dev/null
+mv tempdir/* ./
+rm -r tempdir
+#cp /group/pcts/mkolodru/templates/* ./
+replace.py $1 $2
+replace.py RUNNUMBER $2
+

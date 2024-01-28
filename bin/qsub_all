@@ -1,0 +1,16 @@
+#!/usr/bin/env python
+
+import glob
+import subprocess
+import time
+
+def file_key(a):
+    return int(a[:-5].split('_')[-1])
+
+fileList = glob.glob('*.qsub')
+fileList.sort(key=file_key)
+
+for file in fileList:
+    cmd = 'qsub ' + file
+    subprocess.call(cmd, shell=True)
+    time.sleep(1)

@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+
+qstat -u mkolodru > temp.temp
+qdeljobs.py temp.temp

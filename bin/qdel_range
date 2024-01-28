@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+if [ $# -lt 2 ]
+	then
+	echo "Proper usage: qdel_range \$first \$last"
+	exit
+fi
+
+
+for((i=$1;i<$2+1;i=i+1))
+  do
+  cmd=`printf "qdel %s" "$i"`
+  echo $cmd
+  $cmd
+done

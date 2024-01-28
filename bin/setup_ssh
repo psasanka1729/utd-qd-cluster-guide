@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+if [ $# -lt 1 ]
+    then
+    echo "Usage: setup_ssh remote_computer"
+    exit
+fi
+
+RSA_ROOT=id_rsa_$1
+RSA_FILE=$RSA_ROOT.pub
+
+ssh-keygen -t rsa -f ~/.ssh/$RSA_ROOT # Leave everything blank when filling this out
+ssh $1 mkdir -p ~/.ssh
+cat ~/.ssh/$RSA_FILE | ssh $1 'cat >> ~/.ssh/authorized_keys'
+ssh $1 chmod 700 ~/.ssh
+ssh $1 chmod 640 ~/.ssh/authorized_keys
+
+echo -e "Host $1" >> ~/.ssh/config 
+echo -e "\tIdentityFile ~/.ssh/$RSA_ROOT" >> ~/.ssh/config
+chmod 600 ~/.ssh/config

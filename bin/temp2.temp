@@ -1,0 +1,38 @@
+2011-01-04T14:34:29 jobs status:
+job=4021 cput=00:00:11 mem=5856kb vmem=203960kb wall=14:56:00 state=R host=node029/3  qtime=2011-01-03t23:37:08 Warning:
+Total 1 jobs, do qstat -f1 jobid for full info, diagnose -p for priority info of queued jobs
+
+The following job was submitted as:
+    qsub run1_010311_9.qsub
+PBS_O_WORKDIR=/group/pcts/stochDiag/build/run1_010311/
+-rw-rw-r-- 1 mkolodru pcts 506 Jan  3 23:26 /group/pcts/stochDiag/build/run1_010311/run1_010311_9.qsub
+#!/bin/sh 
+#PBS -j oe
+# make big scratch directory 
+#PBS -q long
+#PBS -l cput=36:00:00
+#PBS -V
+echo $PWD
+RUN_NAME=run1_010311
+myDir=/scratch/$USER/ColdAtoms/$RUN_NAME/v9
+mkdir -p $myDir
+mkdir -p $myDir/build
+mkdir -p $myDir/lookupTables
+cp /group/pcts/stochDiag/build/$RUN_NAME/stochDiag_$RUN_NAME $myDir/build/
+cp /group/pcts/stochDiag/lookupTables/* $myDir/lookupTables/
+cd $myDir/build/
+time ./stochDiag_$RUN_NAME 1 0 1 50 -a=100 -i=10000000000 -z=0.05 -w=300000 -W=1 2> error.err
+# finish loop one 
+ 
+Other info:
+    exec_host = node029/3
+    job_state = R
+    resources_used.cput = 00:00:11
+    resources_used.mem = 5856kb
+    resources_used.vmem = 203960kb
+    resources_used.walltime = 14:56:00
+    ctime = Mon Jan  3 23:37:08 2011
+    mtime = Mon Jan  3 23:37:08 2011
+    qtime = Mon Jan  3 23:37:08 2011
+    etime = Mon Jan  3 23:37:08 2011
+PE:  1.00  StartPriority:  1
